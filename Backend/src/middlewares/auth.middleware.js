@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken'
 import { asyncHandler } from '../utils/asyncHandler.util.js'
 import apiError from '../utils/apiError.util.js'
+import User from '../models/user.model.js'
 
 
 
 export const verifyJWT=asyncHandler(async (req,res,next)=>{
    try {
-     const token=req.cookies?.accessToken || req.header("Authorization").replace("Bearer ","")
+     const token=req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
      if(!token)
      {
          return res.status(400).json(new apiError(400,"Token is required"))
